@@ -6,12 +6,12 @@ import { firestore } from "firebase-admin";
 export const updateHugeNumberOfDocs = async (querySnapshot: firestore.QuerySnapshot, chunkSize = 10000) => {
     console.log(`Starting query -> ${new Date()}`);
 
-    let i, j, temporary;
+    let i, j, chunkedArray;
     for (i = 0, j = querySnapshot.size; i < j; i += chunkSize) {
         console.log(`Starting batch ${i} -> ${new Date()}`);
-        temporary = querySnapshot.docs.slice(i, i + chunkSize);
+        chunkedArray = querySnapshot.docs.slice(i, i + chunkSize);
         await Promise.all(
-            temporary.map(doc => doc.ref.set({
+            chunkedArray.map(doc => doc.ref.set({
                 // some field
             }, { merge: true }))
         );
