@@ -12,8 +12,7 @@ export const updateHugeNumberOfDocs = async (querySnapshot: firestore.QuerySnaps
         temporary = querySnapshot.docs.slice(i, i + chunkSize);
         await Promise.all(
             temporary.map(doc => doc.ref.set({
-                lastUpdated: new Date().getTime(),
-                lastTraced: new Date().getTime()
+                // some field
             }, { merge: true }))
         );
         console.log(`Batch done -> ${new Date()}`);
