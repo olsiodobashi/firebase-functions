@@ -9,7 +9,7 @@ export const updatePropertyForSingleDoc = async <T>(collection: string, docId: s
 export const updatePropertyForAllDocs = async <T>(collection: string, fieldName: string, newValue: T) => {
     const allDocsSnapshot = await db.collection(collection).get();
 
-    for await (const doc of allDocsSnapshot.docs) {
+    for (const doc of allDocsSnapshot.docs) {
         await db.doc(`${collection}/${doc.id}`).set({
             [fieldName]: newValue
         }, { merge: true });
